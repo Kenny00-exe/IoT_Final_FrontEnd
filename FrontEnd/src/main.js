@@ -37,6 +37,7 @@ Vue.use(Dialog)
 Vue.use(Link)
 Vue.use(VueRouter)
 
+
 new Vue({
   router,
   store:store,

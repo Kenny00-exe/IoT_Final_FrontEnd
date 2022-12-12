@@ -4,13 +4,18 @@
     <div class="top-header">
       <div class="title">
         <h1>{{ title }}</h1>
+        
         <el-radio-group v-model="radio1">
+          <el-radio-button label="订阅" @click="openSubscribe"></el-radio-button>
+
           <router-link to="/">
             <el-radio-button label="中国"></el-radio-button>
           </router-link>
           <router-link to="/world">
             <el-radio-button label="全球"></el-radio-button>
           </router-link>
+
+          <el-radio-button label="发布" @click="openPublish"></el-radio-button>          
         </el-radio-group>
         <div class="top-header-tip">
           <div class="sub-title">
@@ -209,6 +214,8 @@
           @click="aboutDialogShowHandler"
         ></i>
       </div>
+
+
     </div>
   </div>
 </template>
@@ -221,6 +228,10 @@ import BasicTrendChart from "../components/BasicTrendChart";
 import BasicTrendChartProvince from "../components/BasicTrendChartProvince";
 import About from "../components/About";
 import BasicProportionChart from "../components/BasicProportionChart";
+
+import PublishBox from "../components/publish";
+import SubscribeBox from "../components/subscribe";
+
 
 import covid19Service from "../api/covid19";
 
@@ -318,6 +329,10 @@ export default {
   },
   data() {
     return {
+      subscribeShow: false,
+      publishShow: false,
+
+
       title: "全国新冠肺炎疫情数据大屏",
       radio1: "中国",
       provinceTableDialogVisible: false,

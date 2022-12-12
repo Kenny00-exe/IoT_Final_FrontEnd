@@ -14,6 +14,16 @@ const routes = [
     name: 'World',
     component: () => import('@/views/world')
   },
+  {
+    path: '/publish',
+    name: 'Publish',
+    component: () => import('@/views/publishView')
+  },
+  {
+    path: '/subscribe',
+    name: 'Subscribe',
+    component: () => import('@/views/subscribeView')
+  },
 ]
 
 const router = new Router({
