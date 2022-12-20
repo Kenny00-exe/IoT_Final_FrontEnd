@@ -78,6 +78,12 @@ export default {
       axios.post("/go/subscribe", formData).then((res) => {
         console.log("数据：", res);
       });
+
+      this.location = ""
+      this.$message({
+          message: '订阅成功！',
+          type: 'success'
+        });
     },
     tableRowClassName({ row, rowIndex }) {
       if (rowIndex === 1) {
