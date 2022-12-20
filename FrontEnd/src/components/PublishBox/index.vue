@@ -226,9 +226,21 @@ location: "",
       formData.append("dead", this.form.dead);
       formData.append("inform", this.form.inform);
 
-      axios.post("/publish", formData).then((res) => {
+      axios.post("/go/publish", formData).then((res) => {
         console.log("数据：", res);
       });
+
+      this.location = ""
+      this.form.date = ""
+      this.form.new = ""
+      this.form.heal = ""
+      this.form.dead = ""
+      this.form.inform = ""
+
+      this.$message({
+          message: '发布成功！',
+          type: 'success'
+        });
     },
   },
 };

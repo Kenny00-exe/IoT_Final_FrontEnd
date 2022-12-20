@@ -57,7 +57,7 @@ export default {
   methods: {
     fetchMessages(){
       axios
-      .get("/get_messages", {
+      .get("/go/get_messages", {
         params: { userID: "jiawei" },
       })
       .then((res) => {
@@ -75,7 +75,7 @@ export default {
       formData.append("userID", "jiawei");
       formData.append("location", this.location);
 
-      axios.post("/subscribe", formData).then((res) => {
+      axios.post("/go/subscribe", formData).then((res) => {
         console.log("数据：", res);
       });
     },
