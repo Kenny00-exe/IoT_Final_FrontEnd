@@ -1,12 +1,22 @@
 <template>
   <div class="container">
     <!-- 顶部 -->
+
     <div class="top-header">
       <div class="title">
-        <h1>{{ title }}</h1>
         
+        <h1>{{ title }}</h1>
+
+        <router-link to="/Login">
+    <el-button type="primary">登陆</el-button>
+          </router-link>
+
+
         <el-radio-group v-model="radio1">
-          <el-radio-button label="订阅" @click="openSubscribe"></el-radio-button>
+
+
+          <el-button type="primary" @click="openSubscribe">订阅</el-button>
+          
 
           <router-link to="/">
             <el-radio-button label="中国"></el-radio-button>
@@ -15,8 +25,12 @@
             <el-radio-button label="全球"></el-radio-button>
           </router-link>
 
-          <el-radio-button label="发布" @click="openPublish"></el-radio-button>          
+          <el-button type="primary" @click="openPublish">发布</el-button>
+
         </el-radio-group>
+
+
+        
         <div class="top-header-tip">
           <div class="sub-title">
             此数据为实时真实数据，数据来源：丁香园网站
@@ -197,6 +211,25 @@
           </el-table>
         </div>
       </el-dialog>
+
+      <el-dialog
+        title="发布"
+        :visible.sync="publishVisible"
+        width="30%"
+        :before-close="publishDialogClose"
+      >
+        <PublishBox />
+      </el-dialog>
+
+      <el-dialog
+        title="订阅"
+        :visible.sync="subscribeVisible"
+        width="70%"
+        :before-close="subscribeDialogClose"
+      >
+        <SubscribeBox />
+      </el-dialog>
+
       <!-- 关于弹窗 -->
       <el-dialog
         title="关于"
@@ -214,8 +247,6 @@
           @click="aboutDialogShowHandler"
         ></i>
       </div>
-
-
     </div>
   </div>
 </template>
@@ -229,9 +260,8 @@ import BasicTrendChartProvince from "../components/BasicTrendChartProvince";
 import About from "../components/About";
 import BasicProportionChart from "../components/BasicProportionChart";
 
-import PublishBox from "../components/publish";
+import PublishBox from "../components/PublishBox";
 import SubscribeBox from "../components/subscribe";
-
 
 import covid19Service from "../api/covid19";
 
@@ -326,12 +356,15 @@ export default {
     BasicTrendChartProvince,
     About,
     BasicProportionChart,
+
+    PublishBox,
+    SubscribeBox,
+
   },
   data() {
     return {
-      subscribeShow: false,
-      publishShow: false,
-
+      subscribeVisible: false,
+      publishVisible: false,
 
       title: "全国新冠肺炎疫情数据大屏",
       radio1: "中国",
@@ -627,6 +660,25 @@ export default {
     aboutDialogClose() {
       this.aboutDialogVisible = false;
     },
+
+    openPublish(){
+      this.publishVisible = true;
+      console.log(11);
+    },
+
+    publishDialogClose() {
+      this.publishVisible = false;
+    },
+    openSubscribe(){
+      this.subscribeVisible = true;
+    },
+    subscribeDialogClose() {
+      this.subscribeVisible = false;
+    },
+
+
+
+
     setBasicData(data) {
       // 重新生成，否则视图不更新
       let config = initBasicConfig(data);
@@ -666,6 +718,8 @@ export default {
 };
 </script>
 <style>
+
+
 .container {
   position: relative;
 }

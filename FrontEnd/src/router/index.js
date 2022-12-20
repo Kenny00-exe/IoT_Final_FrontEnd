@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Login from '@/components/Login'
+import Register from "@/components/Register";
+
 Vue.use(Router)
 
 const routes = [
@@ -24,6 +27,16 @@ const routes = [
     name: 'Subscribe',
     component: () => import('@/views/subscribeView')
   },
+  {
+    path: '/Login',
+    name: 'Login',
+    component: () => import('@/views/loginView')
+  },
+  {
+    path:'/Register',
+    name:'Register',
+    component: () => import('@/views/registerView')
+  }
 ]
 
 const router = new Router({
