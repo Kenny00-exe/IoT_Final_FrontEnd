@@ -5,7 +5,7 @@
       <div class="title">
         <h1>{{ title }}</h1>
         <el-radio-group v-model="radio1">
-          <router-link to="/">
+          <router-link to="/china">
             <el-radio-button label="中国"></el-radio-button>
           </router-link>
           <router-link to="/world">
@@ -49,7 +49,7 @@
                   </chart-card>
 
                   <!-- 占比 -->
-                  <chart-card
+                  <!-- <chart-card
                     title="各国占比"
                     :customClass="`chart-item-bottom-sep`"
                   >
@@ -58,7 +58,7 @@
                       :data="basicData"
                       style="width: 100%; height: 120px"
                     />
-                  </chart-card>
+                  </chart-card> -->
                   <!-- 治愈率和死亡率 -->
                   <chart-card
                     title="全国治愈率和死亡率"
@@ -220,8 +220,6 @@ import BasicDataItemLabel from "../components/BasicDataItemLabel";
 import BasicTrendChart from "../components/BasicTrendChart";
 import BasicTrendChartProvince from "../components/BasicTrendChartProvince";
 import About from "../components/About";
-import BasicProportionChart from "../components/BasicProportionChart";
-
 import covid19Service from "../api/covid19";
 
 const formatter = (number) => {
@@ -244,7 +242,7 @@ const getNumberStyle = (
 };
 
 const initBasicConfig = (data = null) => {
-  let currentConfirmedCount = data ? [data.currentConfirmedCount] : 0;
+  // let currentConfirmedCount = data ? [data.currentConfirmedCount] : 0;
   let confirmedCount = data ? [data.confirmedCount] : 0;
   let importedCount = data ? [data.importedCount] : 0;
   let noInFectCount = data ? [data.noInFectCount] : 0;
@@ -257,12 +255,12 @@ const initBasicConfig = (data = null) => {
       formatter,
       style: getNumberStyle(),
     },
-    currentConfirmedCount: {
-      number: [currentConfirmedCount],
-      content: "{nt}",
-      formatter,
-      style: getNumberStyle("#2E8EEA"),
-    },
+    // currentConfirmedCount: {
+    //   number: [currentConfirmedCount],
+    //   content: "{nt}",
+    //   formatter,
+    //   style: getNumberStyle("#2E8EEA"),
+    // },
     importedCount: {
       number: [importedCount],
       content: "{nt}",
@@ -314,7 +312,6 @@ export default {
     BasicTrendChart,
     BasicTrendChartProvince,
     About,
-    BasicProportionChart,
   },
   data() {
     return {
@@ -324,7 +321,7 @@ export default {
       aboutDialogVisible: false,
       commonData: {},
       basicData: {
-        currentConfirmedCount: 0,
+        // currentConfirmedCount: 0,
         currentConfirmedIncr: 0,
         provinceConfirmedCount: 0,
         confirmedIncr: 0,
@@ -404,13 +401,14 @@ export default {
             return;
           }
           self.basicData = res.data;
-          self.basicData.currentConfirmedIncr =
-            res.data.confirmedCount - res.data.deadCount - res.data.curedCount;
-          self.basicData.currentConfirmedCount =
-            res.data.confirmedCount - res.data.deadCount - res.data.curedCount;
+          // self.basicData.currentConfirmedIncr =
+          //   res.data.confirmedCount - res.data.deadCount - res.data.curedCount;
+          // self.basicData.currentConfirmedCount =
+          //   res.data.confirmedCount - res.data.deadCount - res.data.curedCount;
           self.basicData.confirmedIncr = res.data.confirmedCount;
           self.basicData.curedIncr = res.data.curedCount;
           self.basicData.deadIncr = res.data.deadCount;
+          self.basicData.confirmedCount = res.data.confirmedCount;
           self.setBasicData(res.data);
         });
     },
@@ -421,12 +419,12 @@ export default {
         .then((res) => {
           if (res.status === 200) {
             console.log(res.data);
-            for (var iterator of res.data) {
-              iterator.provinceCurrentConfirmedCount =
-                iterator.provinceConfirmedCount -
-                iterator.provinceCuredCount -
-                iterator.provinceDeadCount;
-            }
+            // for (var iterator of res.data) {
+            //   iterator.provinceCurrentConfirmedCount =
+            //     iterator.provinceConfirmedCount -
+            //     iterator.provinceCuredCount -
+            //     iterator.provinceDeadCount;
+            // }
             self.provinceDataList = res.data;
             self.setAreaChartData(res.data);
             // 设置累计排名数据
@@ -616,7 +614,8 @@ export default {
       // 重新生成，否则视图不更新
       let config = initBasicConfig(data);
       this.defaultDataConfig = config;
-      let sum = data.currentConfirmedCount + data.curedCount + data.deadCount;
+      let sum = data.confirmedCount;
+
       // 处理治愈率和死亡率
       this.rate = {
         curedRate: data.curedCount / sum,
@@ -633,7 +632,6 @@ export default {
       this.$refs.cureRateChart.initChart();
       this.$refs.confirmedCountTrendChart.initChart();
       this.$refs.confirmedCountTrendChartProvince.initChart();
-      this.$refs.basicProportionChart.initChart();
     },
   },
   mounted() {
@@ -678,7 +676,7 @@ h1 {
   min-width: 350px;
 }
 .chart-card {
-  background: #0f142b;
+  background: #5b79ff;
   border-radius: 10px;
   margin: 0 20px;
 }

@@ -33,7 +33,7 @@ export default {
 </script>
 <style scoped>
 .basic-data-item {
-  background: #0f142b;
+  background: #4163fe;
   margin: 0 5px 5px 5px;
   padding: 15px 3px 10px 10px;
   border-radius: 5px;

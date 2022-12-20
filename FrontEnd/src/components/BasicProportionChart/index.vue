@@ -38,7 +38,7 @@ export default {
             {
               name: this.$store.state.worldMapSelect + "现有确诊占比",
               value: calculateProportion(currentConfirmedCount, confirmedCount),
-            },
+            },                                                          
             {
               name: this.$store.state.worldMapSelect + "累计治愈占比",
               value: calculateProportion(curedCount, confirmedCount),

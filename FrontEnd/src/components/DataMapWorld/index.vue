@@ -81,38 +81,38 @@ export default {
           bottom: 40,
           showLabel: !0,
           textStyle: {
-            color: "rgba(255,255,255,0.7)", //图例的文字
+            color: "rgba(0,0,0,0.7)", //图例的文字
           },
           // 图例
           pieces: [
             {
               gt: 10000000,
               label: "> 10000000 人",
-              color: "#073067",
+              color: "#DC143C",
             },
             {
               gte: 1000000,
               lte: 10000000,
               label: "1000000 - 10000000 人",
-              color: "#1260A8",
+              color: "#FFA500",
             },
             {
               gte: 100000,
               lt: 1000000,
               label: "100000 - 1000000 人",
-              color: "#66A9D7",
+              color: "#FFFF00",
             },
             {
               gt: 10000,
               lt: 100000,
               label: "10000 - 100000 人",
-              color: "#A2CBE1",
+              color: "#FFFACD",
             },
             {
               gt: 0,
               lt: 10000,
               label: "< 10000 人",
-              color: "#B5D1E0",
+              color: "#F5F5DC",
             },
           ],
           show: !0,

@@ -78,38 +78,38 @@ export default {
           bottom: 40,
           showLabel: !0,
           textStyle: {
-            color: 'rgba(255,255,255,0.7)'
+            color: 'rgba(0,0,0,0.7)'
           },
           // 图例
           pieces: [
             {
               gt: 5000,
               label: '> 5000 人',
-              color: '#073067',
+              color: '#DC143C',
             },
             {
               gte: 1000,
               lte: 5000,
               label: '1000 - 5000 人',
-              color: '#1260A8',
+              color: '#FFA500',
             },
             {
               gte: 500,
               lt: 1000,
               label: '500 - 1000 人',
-              color: '#66A9D7',
+              color: '#FFFF00',
             },
             {
               gt: 100,
               lt: 500,
               label: '100 - 500 人',
-              color: '#A2CBE1',
+              color: '#FFFACD',
             },
             {
               gt: 0,
               lt: 100,
               label: '< 100 人',
-              color: '#B5D1E0'
+              color: '#F5F5DC'
             },
           ],
           show: !0,

@@ -73,7 +73,7 @@ export default {
           }]
         },{
           type: 'group',
-          left: '170px',
+          left: '172px',
           top: '60%',
           children: [{
             type: 'text',
@@ -245,7 +245,7 @@ export default {
           }
         }]
       };
-      // 
+      //
       chart.setOption(option)
     }
   },
