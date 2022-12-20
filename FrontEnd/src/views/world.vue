@@ -4,8 +4,12 @@
     <div class="top-header">
       <div class="title">
         <h1>{{ title }}</h1>
+
+        <el-button class="subscribe-pos" type="primary" @click="openSubscribe">订阅</el-button>
+          <el-button class="publish-pos" type="primary" @click="openPublish">发布</el-button> 
+
         <el-radio-group v-model="radio1">
-          <router-link to="/">
+          <router-link to="/china">
             <el-radio-button label="中国"></el-radio-button>
           </router-link>
           <router-link to="/world">
@@ -46,7 +50,7 @@
                   </chart-card>
 
                   <!-- 占比 -->
-                  <chart-card
+                  <!-- <chart-card
                     title="各国占比"
                     :customClass="`chart-item-bottom-sep`"
                   >
@@ -55,7 +59,7 @@
                       :data="basicData"
                       style="width: 100%; height: 120px"
                     />
-                  </chart-card>
+                  </chart-card> -->
                   <!-- 治愈率和死亡率 -->
                   <chart-card
                     title="全球治愈率和死亡率"
@@ -197,6 +201,24 @@
       >
         <about />
       </el-dialog>
+
+      <el-dialog
+        title="发布"
+        :visible.sync="publishVisible"
+        width="30%"
+        :before-close="publishDialogClose"
+      >
+        <PublishBox />
+      </el-dialog>
+
+      <el-dialog
+        title="订阅"
+        :visible.sync="subscribeVisible"
+        width="70%"
+        :before-close="subscribeDialogClose"
+      >
+        <SubscribeBox />
+      </el-dialog>
       <!-- 关于图标 -->
       <div class="about-wraper">
         <i
@@ -216,9 +238,12 @@ import BasicDataItemLabel from "../components/BasicDataItemLabel";
 import BasicTrendChartWorld from "../components/BasicTrendChartWorld";
 import BasicTrendChartGlobal from "../components/BasicTrendChartGlobal";
 import About from "../components/About";
-import BasicProportionChart from "../components/BasicProportionChart";
 
 import covid19Service from "../api/covid19";
+
+
+import PublishBox from "../components/PublishBox";
+import SubscribeBox from "../components/subscribe";
 
 const formatter = (number) => {
   const numbers = number.toString().split("").reverse();
@@ -240,7 +265,7 @@ const getNumberStyle = (
 };
 
 const initBasicConfig = (data = null) => {
-  let currentConfirmedCount = data ? [data.currentConfirmedCount] : 0;
+  // let currentConfirmedCount = data ? [data.currentConfirmedCount] : 0;
   let confirmedCount = data ? [data.confirmedCount] : 0;
   let importedCount = data ? [data.importedCount] : 0;
   let noInFectCount = data ? [data.noInFectCount] : 0;
@@ -253,12 +278,12 @@ const initBasicConfig = (data = null) => {
       formatter,
       style: getNumberStyle(),
     },
-    currentConfirmedCount: {
-      number: [currentConfirmedCount],
-      content: "{nt}",
-      formatter,
-      style: getNumberStyle("#2E8EEA"),
-    },
+    // currentConfirmedCount: {
+    //   number: [currentConfirmedCount],
+    //   content: "{nt}",
+    //   formatter,
+    //   style: getNumberStyle("#2E8EEA"),
+    // },
     importedCount: {
       number: [importedCount],
       content: "{nt}",
@@ -310,17 +335,24 @@ export default {
     BasicTrendChartWorld,
     BasicTrendChartGlobal,
     About,
-    BasicProportionChart,
+
+
+    PublishBox,
+    SubscribeBox,
   },
   data() {
     return {
+      subscribeVisible: false,
+      publishVisible: false,
+
+
       title: "全球新冠肺炎疫情数据大屏",
       radio1: "全球",
       provinceTableDialogVisible: false,
       aboutDialogVisible: false,
       commonData: {},
       basicData: {
-        currentConfirmedCount: 0,
+        // currentConfirmedCount: 0,
         currentConfirmedIncr: 0,
         confirmedCount: 0,
         confirmedIncr: 0,
@@ -389,7 +421,7 @@ export default {
   methods: {
     queryBasicData() {
       let self = this;
-      var lastCurrentConfirmedCount = 0;
+      // var lastCurrentConfirmedCount = 0;
       this.axios
         .get("http://localhost:8080/api/getGlobalSum")
         .then((res) => {
@@ -407,14 +439,14 @@ export default {
           self.basicData.curedCount = res.data[0].cured;
           self.basicData.deadCount = res.data[0].dead;
 
-          lastCurrentConfirmedCount =
-            res.data[1].sum - res.data[1].dead - res.data[1].cured;
+          // lastCurrentConfirmedCount =
+          //   res.data[1].sum - res.data[1].dead - res.data[1].cured;
 
-          self.basicData.currentConfirmedCount =
-            res.data[0].sum - res.data[0].dead - res.data[0].cured;
+          // self.basicData.currentConfirmedCount =
+          //   res.data[0].sum - res.data[0].dead - res.data[0].cured;
 
-          self.basicData.currentConfirmedIncr =
-            self.basicData.currentConfirmedCount - lastCurrentConfirmedCount;
+          // self.basicData.currentConfirmedIncr =
+          //   self.basicData.currentConfirmedCount - lastCurrentConfirmedCount;
 
           self.setBasicData(res.data[0]);
         });
@@ -428,10 +460,10 @@ export default {
           console.log("错误:" + res.info);
           return;
         }
-        for (var iterator of res.data) {
-          iterator.currentConfirmedCount =
-            iterator.confirmedCount - iterator.curedCount - iterator.deadCount;
-        }
+        // for (var iterator of res.data) {
+        //   iterator.currentConfirmedCount =
+        //     iterator.confirmedCount - iterator.curedCount - iterator.deadCount;
+        // }
         self.provinceDataList = res.data;
         self.setAreaChartData(res.data);
         // 设置累计排名数据
@@ -615,7 +647,7 @@ export default {
       // 重新生成，否则视图不更新
       let config = initBasicConfig(data);
       this.defaultDataConfig = config;
-      let sum = data.currentConfirmedCount + data.curedCount + data.deadCount;
+      let sum = data.confirmedCount;
 
       // 处理治愈率和死亡率
       this.rate = {
@@ -633,8 +665,23 @@ export default {
       this.$refs.cureRateChart.initChart();
       this.$refs.confirmedCountTrendChartWorld.initChart();
       this.$refs.confirmedCountTrendChartGlobal.initChart();
-      this.$refs.basicProportionChart.initChart();
     },
+
+    openPublish(){
+      this.publishVisible = true;
+      console.log(11);
+    },
+
+    publishDialogClose() {
+      this.publishVisible = false;
+    },
+    openSubscribe(){
+      this.subscribeVisible = true;
+    },
+    subscribeDialogClose() {
+      this.subscribeVisible = false;
+    },
+
   },
   mounted() {
     this.initAllChart();
@@ -679,7 +726,7 @@ h1 {
   min-width: 350px;
 }
 .chart-card {
-  background: #0f142b;
+  background: #3157ff;
   border-radius: 10px;
   margin: 0 20px;
 }
@@ -748,5 +795,16 @@ h1 {
   position: fixed;
   bottom: 20px;
   right: 20px;
+}
+
+
+.subscribe-pos {
+  position: fixed;
+  left: 30px;
+}
+
+.publish-pos {
+  position: fixed;
+  left: 100px;
 }
 </style>

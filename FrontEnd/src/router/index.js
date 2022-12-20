@@ -8,7 +8,7 @@ Vue.use(Router)
 
 const routes = [
   {
-    path: '/',
+    path: '/china',
     name: 'China',
     component: () => import('@/views/main-layout')
   },
@@ -18,25 +18,17 @@ const routes = [
     component: () => import('@/views/world')
   },
   {
-    path: '/publish',
-    name: 'Publish',
-    component: () => import('@/views/publishView')
-  },
-  {
-    path: '/subscribe',
-    name: 'Subscribe',
-    component: () => import('@/views/subscribeView')
-  },
-  {
-    path: '/Login',
-    name: 'Login',
-    component: () => import('@/views/loginView')
-  },
-  {
-    path:'/Register',
-    name:'Register',
-    component: () => import('@/views/registerView')
-  }
+
+      path: '/',
+      name: 'Login',
+      component:()=> import('../views/Login')
+    },
+    {
+      path:'/Register',
+      name:'Register',
+      component:()=> import('../views/Register')
+    }
+
 ]
 
 const router = new Router({

@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
     <router-view></router-view>
   </div>
 </template>
@@ -21,13 +20,13 @@ export default {
   margin: 0;
 }
 body {
-  background: #060612;
+  background: #ffffff;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #BCBCBF;
+  color: #000000;
 }
 </style>
